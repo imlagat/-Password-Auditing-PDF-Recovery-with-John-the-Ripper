@@ -1,53 +1,131 @@
-# Password-Auditing-PDF-Recovery-with-John-the-Ripper
-This project demonstrates password strength auditing and cryptographic hash recovery on an encrypted PDF document. 
-# 🔐 Password Auditing & PDF Recovery with John the Ripper
+# 🔐 Password Auditing & PDF Recovery Using John the Ripper
 
-Module: Week 3 — Project Module 1: Password Cracking with JTR
+**Networkwalks Cybersecurity & Ethical Hacking Internship | Week 3 – Project Module 1**
 
-Environment: macOS (Intel x86_64) & Kali Linux (VirtualBox)
+A practical password security assessment demonstrating PDF password hash extraction, dictionary-based password auditing, and password recovery using **John the Ripper (Jumbo Edition)**.
 
-Target: My Locked PDF1.pdf
+## 📌 Project Overview
 
-# 📌 Summary
+This project involved auditing the password security of an encrypted PDF document using John the Ripper.
 
-This project demonstrates password strength auditing and cryptographic hash recovery on an encrypted PDF document. While the standard lab guide outlines a Windows GUI workflow using Johnny, the exercise was adapted and executed natively on macOS via the command line using John the Ripper (Jumbo Edition).
+The exercise focused on extracting cryptographic password hashes from an encrypted PDF, analyzing password strength through dictionary-based attacks, and recovering the password in an authorized lab environment.
 
-# 🛠️ Tools Used
+Although the original lab guide demonstrated a Windows-based workflow using Johnny, I adapted the exercise to work with a macOS environment using command-line tools.
 
-John the Ripper (john-jumbo 1.9.0-jumbo-1): Command-line password auditing tool used to run dictionary and rule-based attacks against PDF hashes (MD5/SHA2/RC4/AES).
+## 🎯 Objectives
 
-Homebrew & OpenSSL 4: Used to compile john-jumbo from source on Intel macOS.
+- Understand how password-based PDF encryption works.
+- Extract password hashes from encrypted PDF documents.
+- Configure and use John the Ripper for password auditing.
+- Perform dictionary-based password attacks.
+- Evaluate the effectiveness of weak passwords against automated attacks.
+- Understand the importance of strong password practices.
 
-PDF Hash Extractor (pdf2john): Extracted the $pdf$4*4*128*... encryption metadata from the locked PDF.
+## 🖥️ Lab Environment
 
-macOS Terminal (zsh) & Preview: Used for hash management, execution, and final PDF decryption verification.
+| Component | Configuration |
+|---|---|
+| Host OS | macOS (Intel x86_64) |
+| Virtualization | Oracle VirtualBox |
+| Linux Environment | Kali Linux |
+| Password Auditing Tool | John the Ripper (Jumbo Edition) |
+| Hash Extraction | pdf2john |
+| Package Manager | Homebrew |
+| Shell | Zsh |
+| Target | Encrypted PDF document |
 
-# 🚧 Challenges Encountered & How They Were Solved
+## 🛠️ Tools & Technologies
 
-# Kali Linux VirtualBox Display Corruption:
+- **John the Ripper (Jumbo Edition):** Password auditing and hash-cracking tool.
+- **pdf2john:** Extracts password hashes from encrypted PDF documents.
+- **Homebrew:** Package management and software installation on macOS.
+- **OpenSSL:** Cryptographic library used during the native compilation process.
+- **macOS Terminal:** Command-line environment for executing the assessment.
 
-Issue: Running Kali Linux on an Intel Mac Retina display caused severe horizontal tearing, blue static, and scrambled fonts due to a 3D acceleration and framebuffer stride mismatch.
+## ⚙️ Methodology
 
-Resolution: Disabled 3D acceleration in VirtualBox (VMSVGA controller), turned off macOS Retina high-resolution scaling for VirtualBoxVM, and pivoted to running John the Ripper natively on macOS for maximum performance.
+### 1. Environment Preparation
 
-# Homebrew Deprecation & Network Resets on Intel Mac:
+Prepared the macOS environment and configured the required dependencies for running John the Ripper.
 
-Issue: Homebrew dropped pre-built binary bottles for Intel x86_64 Macs in September 2026, forcing a full source compilation of john-jumbo and openssl@4, which initially failed due to peer connection resets (curl: (56)).
+Due to compatibility and display issues encountered while running Kali Linux in VirtualBox, I adapted the workflow to execute John the Ripper natively on macOS.
 
-Resolution: Re-ran the build with HOMEBREW_NO_AUTO_UPDATE=1, successfully compiling both packages from source.
+### 2. Hash Extraction
 
-# Empty Hash Output & Shell Variable Expansion:
+Used the PDF hash extraction utility (pdf2john) to extract the password hash from the encrypted PDF document.
 
-Issue: Local pdf2john.pl failed to parse the PDF structure, leaving hash1.txt empty (No password hashes loaded). Additionally, $ characters in PDF hashes risk being treated as empty variables by zsh.
+The extracted hash contained the encryption metadata required by John the Ripper to perform password auditing.
 
-Resolution: Extracted the clean $pdf$... hash string and wrapped it in single quotes ('...') when writing to hash1.txt to preserve the exact delimiters.
+### 3. Password Auditing
 
-# 🏆 Key Wins & Results
+Loaded the extracted hash into John the Ripper and executed a dictionary-based password attack.
 
-Native Compilation & Execution: Successfully built and ran john-jumbo natively on Intel macOS, achieving a cracking speed of 34,480+ passwords/second using CPU SSE4.2 instructions.
+The tool compared candidate passwords against the extracted hash to identify a matching password.
 
-Instant Password Recovery: Cracked the 128-bit PDF Revision 4 hash in under 1 second using John's default wordlist rules, recovering the password good-luck.
+### 4. Password Recovery & Verification
 
-Flag Captured: Unlocked My Locked PDF1.pdf and verified access to the completion flag.
+John the Ripper successfully recovered the password.
 
-Security Takeaway: Demonstrated that strong encryption algorithms (128-bit AES/RC4) are easily bypassed when paired with low-entropy, dictionary-based passwords.
+The recovered password was then used to unlock the encrypted PDF document and verify successful access to its contents.
+
+## 🚧 Challenges & Solutions
+
+| Challenge | Solution |
+|---|---|
+| Kali Linux display corruption in VirtualBox | Disabled 3D acceleration and adjusted display settings. |
+| Homebrew source compilation issues | Adjusted the installation process and retried the source compilation. |
+| PDF hash extraction failure | Used an alternative extraction approach and verified the extracted hash format. |
+| Zsh interpreting special characters | Used single quotes to preserve special characters in the extracted hash. |
+
+## 🏆 Results & Achievements
+
+- Successfully compiled and executed John the Ripper natively on an Intel Mac.
+- Achieved a password-auditing speed of **34,480+ passwords per second**.
+- Successfully extracted the encryption hash from the target PDF.
+- Recovered the PDF password in under one second.
+- Verified successful decryption and access to the protected document.
+- Captured the lab completion flag.
+
+**Recovered password:** `good-luck`
+
+## 🔍 Key Security Lessons
+
+This exercise demonstrated that encryption strength and password strength are two different security considerations.
+
+Even when a document uses strong encryption, a weak or predictable password can make it vulnerable to dictionary-based attacks.
+
+Key recommendations:
+
+- Use long, unique and unpredictable passwords.
+- Avoid dictionary words and commonly used phrases.
+- Use password managers to generate and store strong passwords.
+- Apply additional protection to sensitive documents.
+- Avoid reusing passwords across different platforms.
+
+## 📸 Evidence & Screenshots
+
+Screenshots documenting the practical implementation and results are included below.
+
+1. Environment and tool setup.
+2. PDF hash extraction.
+3. John the Ripper execution.
+4. Password recovery result.
+5. Successful PDF decryption and flag verification.
+
+## ⚖️ Ethical Considerations
+
+This exercise was conducted for educational purposes within an authorized cybersecurity training environment.
+
+Password auditing tools should only be used on files, systems and accounts for which permission has been granted.
+
+## 📚 Conclusion
+
+This project provided practical experience in password auditing, cryptographic hash extraction, command-line security tools and password recovery.
+
+It also demonstrated the importance of adapting cybersecurity workflows to different operating systems while troubleshooting technical challenges independently.
+
+---
+
+**Project:** Networkwalks Cybersecurity & Ethical Hacking Internship  
+**Module:** Week 3 – Project Module 1  
+**Tool:** John the Ripper (Jumbo Edition)
