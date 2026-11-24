@@ -1,4 +1,4 @@
-# 🔐 Password Auditing & PDF Recovery Using John the Ripper
+# Password Auditing & PDF Recovery Using John the Ripper
 
 **Networkwalks Cybersecurity & Ethical Hacking Internship | Week 3 – Project Module 1**
 
